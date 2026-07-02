@@ -265,7 +265,7 @@ doc.text(
 
         <div className="info-box risk-box">
 
-          <RiskMeter
+          <Riskmeter
             prediction={result.prediction}
             confidence={result.confidence}
             risk_score={result.risk_score}

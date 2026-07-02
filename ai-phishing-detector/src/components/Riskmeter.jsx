@@ -3,7 +3,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "../App.css";
 
-function RiskMeter({ prediction, confidence, risk_score, darkMode }) {
+function Riskmeter({ prediction, confidence, risk_score, darkMode }) {
   const score = risk_score ?? confidence;
 const isPhishing = score >= 76;
 
@@ -43,4 +43,4 @@ const isPhishing = score >= 76;
   );
 }
 
-export default RiskMeter;
+export default Riskmeter;
