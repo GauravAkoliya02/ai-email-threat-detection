@@ -86,7 +86,12 @@ def classify_urls(urls):
             classified["safe_urls"].append(url)
             
     return classified
-
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({
+        "status": "API is running",
+        "endpoint": "/analyze"
+    })
 @app.route("/analyze", methods=["POST"])
 def analyze():
     try:
