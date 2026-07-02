@@ -94,7 +94,7 @@ def home():
     })
 @app.route("/analyze", methods=["POST"])
 def analyze():
-    try:
+     try:
         data = request.get_json()
         email_content = data.get("email", "")
 
@@ -243,6 +243,109 @@ Strict Target JSON Schema Format:
   ]
 }}
 
+Treat requests involving secrecy, confidentiality, gift cards, financial approval, executive assistance, hidden tasks, payroll changes, invoice approvals, or urgent business requests as strong social engineering indicators even if no malicious URLs or attachments are present.
+
+social_engineering_words = [
+    # Secrecy / Confidentiality
+    "confidential",
+    "confidentiality",
+    "strictly confidential",
+    "discretion",
+    "keep this private",
+    "keep this confidential",
+    "keep this between us",
+    "do not discuss",
+    "don't tell anyone",
+    "remain a surprise",
+    "surprise",
+
+    # Executive / BEC scams
+    "special task",
+    "special assignment",
+    "urgent assistance",
+    "need your assistance",
+    "available today",
+    "available now",
+    "are you available",
+    "kindly reply",
+    "reply asap",
+    "reply urgently",
+    "important request",
+    "need your help",
+    "can you help",
+    "quick favor",
+    "quick favour",
+
+    # Financial scams
+    "gift card",
+    "gift cards",
+    "amazon gift card",
+    "itunes gift card",
+    "google play card",
+    "purchase gift cards",
+    "wire transfer",
+    "bank transfer",
+    "payment request",
+    "invoice attached",
+    "process payment",
+    "financial transaction",
+
+    # Credential / Verification
+    "verify your account",
+    "verify account",
+    "confirm your account",
+    "confirm your identity",
+    "login immediately",
+    "update your password",
+    "reset your password",
+    "security verification",
+    "security alert",
+    "account suspended",
+
+    # Urgency
+    "urgent",
+    "immediately",
+    "as soon as possible",
+    "without delay",
+    "act now",
+    "time sensitive",
+    "limited time",
+    "final notice",
+
+    # Personal information
+    "social security",
+    "credit card",
+    "debit card",
+    "bank account",
+    "account number",
+    "otp",
+    "one time password",
+    "verification code",
+    "cvv",
+    "pin",
+
+    # Suspicious attachments
+    "attached document",
+    "attached invoice",
+    "attached payment",
+    "open attachment",
+    "download attachment",
+    "click the link",
+    "open the document",
+
+    # Threat / Pressure
+    "account will be closed",
+    "account suspended",
+    "legal action",
+    "tax refund",
+    "refund pending",
+    "claim your reward",
+    "claim prize",
+    "lottery",
+    "winner",
+    "congratulations"
+]
+
 IMPORTANT FORMATTING RULES FOR "explanation":
 
 Return "explanation" as a JSON array of bullet points, NOT as one long paragraph.
@@ -319,24 +422,14 @@ Never cross-contaminate risk_score with confidence score values.
         email_lower = email_content.lower()
 
         credential_words = [
-            "password",
-            "otp",
-            "verify account",
-            "login",
-            "sign in",
-            "bank account",
-            "credit card",
-            "ssn"
-        ]
-
-        if any(word in email_lower for word in credential_words):
-            backend_flags += 1
-            if backend_flags >= 3:
-              result["prediction"] = "Phishing"
-
-        elif backend_flags >= 2 and result["prediction"] == "Safe":
-            result["prediction"] = "Suspicious"
-
+    "password","otp","verify account","verify your account",
+    "login","log in","sign in","signin",
+    "reset password","update password",
+    "bank account","credit card","debit card",
+    "cvv","pin","account number",
+    "one time password","verification code",
+    "security code","ssn","social security"
+]
 
         # ---- THE BACKEND PROTECTION ENGINE (Normalization Layer) ----
         # Enforces absolute logical sanity before returning metrics to React UI
@@ -443,7 +536,7 @@ Never cross-contaminate risk_score with confidence score values.
         print("FINAL SANITIZED EXECUTED PAYLOAD:", result)
         return jsonify(result)
 
-    except Exception as e:
+     except Exception as e:
         print("CRITICAL LOG ERROR PARSING ENGINE:", str(e))
         return jsonify({
             "prediction": "Suspicious",
@@ -466,6 +559,5 @@ Never cross-contaminate risk_score with confidence score values.
             "url_scanned_details": {"safe_urls": [], "suspicious_urls": [], "shortened_urls": [], "ip_urls": []},
             "statistics": {"urls": 0, "email_addresses": 0, "phone_numbers": 0, "words": 0, "characters": 0}
         })
-
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug= True, port= 5000)
