@@ -37,7 +37,7 @@ function App() {
 
     try {
       // FIX HERE: Absolute pure string with no hidden markdown attributes
-      const response = await fetch("http://127.0.0.1:5000/analyze", {
+      const response = await fetch("https://ai-email-threat-detection.onrender.com/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
