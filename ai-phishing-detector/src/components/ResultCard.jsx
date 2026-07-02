@@ -1,9 +1,9 @@
 import Riskmeter from "./Riskmeter";
 import ThreatIndicators from "./ThreatIndicators";
 import Recommendations from "./Recommendations";
+import { motion } from "framer-motion";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { motion } from "framer-motion";
 
 function ResultCard({ result, darkMode }) {
 
