@@ -1,4 +1,4 @@
-import RiskMeter from "./RiskMeter";
+import Riskmeter from "./Riskmeter";
 import ThreatIndicators from "./ThreatIndicators";
 import Recommendations from "./Recommendations";
 import jsPDF from "jspdf";
