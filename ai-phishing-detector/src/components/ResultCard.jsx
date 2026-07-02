@@ -42,7 +42,7 @@ function ResultCard({ result, darkMode }) {
   const doc = new jsPDF();
 
   doc.setFont("helvetica", "bold");
-doc.setFontSize(22);
+doc.setFontSize(24);
 doc.text("AI Email Threat Detection Report", 14, 20);
 
 doc.setFont("helvetica", "normal");
@@ -89,7 +89,7 @@ doc.text(
 doc.setFont("helvetica", "normal");
 doc.setFontSize(11);
 
-let y = doc.lastAutoTable.finalY + 25;
+let y = doc.lastAutoTable.finalY + 8;
 
 if (Array.isArray(result.explanation)) {
   result.explanation.forEach((point) => {
@@ -97,18 +97,22 @@ if (Array.isArray(result.explanation)) {
     doc.text(lines, 14, y);
     y += lines.length * 7;
   });
-} else {
+} 
+else {
   const explanation = doc.splitTextToSize(
     result.explanation || "",
     180
   );
   doc.text(explanation, 14, y);
+
+  y += explanation.length * 7;
 }
-  doc.setFontSize(14);
-doc.text("Email Authentication", 14, y + 10);
+  doc.setFontSize("helvetica", "bold");
+  doc.setFontSize(15);
+doc.text("Email Authentication", 14, y + 6);
 
 autoTable(doc, {
-  startY: y + 18,
+  startY: y + 10,
 
   head: [["Authentication", "Status"]],
 
